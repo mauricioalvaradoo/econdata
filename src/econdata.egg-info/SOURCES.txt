@@ -1,0 +1,7 @@
+README.md
+setup.py
+src/econdata.egg-info/PKG-INFO
+src/econdata.egg-info/SOURCES.txt
+src/econdata.egg-info/dependency_links.txt
+src/econdata.egg-info/requires.txt
+src/econdata.egg-info/top_level.txt
