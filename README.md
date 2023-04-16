@@ -1,14 +1,14 @@
 # Econdata
-Extracción de series de tiempo de las cinco principales instituciones económicas para el Perú:
-1. BCRP
-2. YahooFinance
-3. FRED
-4. WorldBank
-5. OCDE
+Extracción de series de tiempo de las principales instituciones económicas para el Perú:
+1. Banco Central de Reserva del Perú (BCRP)
+2. Yahoo Finance
+3. Federal Reserve Economic Data (FRED)
+4. World Bank
+5. Organización para la Cooperación y el Desarrollo Económicos (OCDE)
 
 ```
 # Instalación mediante PyPI
-!pip install econdata == 1.0
+!pip install econdata==1.0
 
 # o simplemente:
 !pip install econdata
@@ -17,8 +17,8 @@ Extracción de series de tiempo de las cinco principales instituciones económic
 
 
 ## Versión 1.0
-* Para el Banco Central de Reserva del Perú (`BCRP`), `Yahoo Finance`, Federal Reserve Economic Data (`FRED`) y el `World Bank`, se cuenta con ambos métodos: `get_data()` y `search()`.
-* Para la OCDE, se cuenta únicamente con el método `get_data()`.
+* Para el `BCRP`, `Yahoo Finance`, `FRED` y el `World Bank`, se cuenta con ambos métodos: `get_data()` y `search()`.
+* Para la `OCDE`, se cuenta únicamente con el método `get_data()`.
 
 
 ## Métodos
