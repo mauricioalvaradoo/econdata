@@ -60,10 +60,11 @@ def get_data(series, tipo="Close", fechaini=None, fechafin=None):
             pass
     
         # Merge
-        df = pd.concat([df, data[["Date", key]]]) if df.empty is True else pd.merge(df, data[["Date", key]], how="left")
+        df = pd.concat([df, data[["Date", key]]]) if df.empty is True else pd.merge(df, data[["Date", key]], how="outer")
 
     df.set_index("Date", inplace=True)
     df.index = df.index.strftime("%Y-%m-%d")
+    df.sort_index(inplace=True)
     df = df.rename(series, axis = 1)
 
 
