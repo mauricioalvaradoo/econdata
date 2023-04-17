@@ -8,7 +8,7 @@ Extracción de series de tiempo de las principales instituciones económicas par
 
 ```
 # Instalación mediante PyPI
-!pip install econdata==1.0
+!pip install econdata==1.0.1
 
 # o simplemente:
 !pip install econdata
@@ -16,7 +16,7 @@ Extracción de series de tiempo de las principales instituciones económicas par
 
 
 
-## Versión 1.0
+## Versión 1.0.1
 * Para el `BCRP`, `Yahoo Finance`, `FRED` y el `World Bank`, se cuenta con ambos métodos: `get_data()` y `search()`.
 * Para la `OCDE`, se cuenta únicamente con el método `get_data()`.
 
