@@ -13,7 +13,7 @@ Extracción de series de tiempo de las principales instituciones económicas par
 # o simplemente:
 !pip install econdata
 ```
-
+El anuncio fue realizado en Linkedin, y está disponible [aquí](https://www.linkedin.com/posts/mauricioalvaradoo_github-mauricioalvaradooecondata-extracci%C3%B3n-activity-7053798889950179328-wl5w?utm_source=share&utm_medium=member_desktop). 
 
 
 ## Versión 1.0.1
@@ -27,7 +27,7 @@ Para cada institución se tiene dos métodos comunes. El primero sirve para extr
 get_data()
 ```
 
-La segunda sirve para conseguir la metadata, principalmente, los códigos de las series:
+La segunda sirve para conseguir la metadata:
 ```
 search()
 ```
@@ -36,6 +36,7 @@ El resultado incluye los nombres, códigos y fechas que servirán como complemen
 
 ## Test !
 El código guía para usar las funciones está disponible [aquí](https://github.com/mauricioalvaradoo/econdata/blob/master/test.py).
+El video del anuncio de la librería y la demo está disponible [aquí](https://www.youtube.com/watch?v=etaqHMDfvtE).
 
 
 ## Créditos
