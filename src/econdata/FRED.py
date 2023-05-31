@@ -86,7 +86,7 @@ def get_data(series, api_key, fechaini, fechafin):
 
 
 
-def search(consulta, api_key):
+def search(consulta, api_key, frecuencia=None):
     
     """ Extraer metadatos de las consultas
 
@@ -96,7 +96,13 @@ def search(consulta, api_key):
         Palabras claves de las consultas  
     api_key: str
         API Key del desarrollador: https://fred.stlouisfed.org/docs/api/api_key.html
-    
+    frecuencia: str
+        Frecuencia de la serie consultada. Default: None.
+        >>> "Daily"
+        >>> "Monthly"
+        >>> "Quarterly"
+        >>> "Annual"
+            
     Retorno
     ----------
     df: pd.DataFrame
@@ -138,6 +144,12 @@ def search(consulta, api_key):
         "frequency": list_frequency,
         "seasonal_adjusment": list_seasonal_adjusment
     })
+
+    if frecuencia is not None:
+        try:
+            df = df[df["frequency"] == str(frecuencia)]
+        except:
+            pass
 
     df.set_index("id", inplace=True) 
 
