@@ -2,6 +2,8 @@ import pandas as pd
 import numpy as np
 import requests 
 
+import warnings
+warnings.simplefilter('ignore')
 
 
 def get_data(series, api_key, fechaini, fechafin):
@@ -81,6 +83,9 @@ def get_data(series, api_key, fechaini, fechafin):
         except:
             pass
     
+    # index to datetime
+    df.index = pd.to_datetime(df.index)
+
     return df
 
 

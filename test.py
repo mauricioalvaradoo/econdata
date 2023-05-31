@@ -6,10 +6,6 @@ from econdata import FRED
 from econdata import OECD
 from econdata import YFinance
 
-import warnings
-warnings.simplefilter("ignore")
-
-
 
 
 ## BCRP ====================================================
