@@ -86,7 +86,7 @@ df.head()
 
 
 ## OECD ====================================================
-# search
+# get_data
 df = OECD.get_data(
     identifier = "QNA", #Quarterly National Accounts
     countries = 
