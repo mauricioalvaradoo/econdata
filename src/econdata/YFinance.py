@@ -3,14 +3,14 @@ import yfinance as yf
 
 
 
-def get_data(series, tipo="Close", fechaini=None, fechafin=None):
+def get_data(series, tipo='Close', fechaini=None, fechafin=None):
 
-    """ Importar multiples series de la API de Yahoo Finance
+    ''' Importar multiples series de la API de Yahoo Finance.
     
     Parámetros
     ----------
     series: dict
-        Lista de los codigos de las series y nombres
+        Lista de los codigos de las series y nombres.
     tipo: str
         Serie consultada.
         >>> Close: Default
@@ -20,14 +20,14 @@ def get_data(series, tipo="Close", fechaini=None, fechafin=None):
         >>> AdjClose
         >>> Volume
     fechaini: datetime
-        Fecha de inicio de la serie 
+        Fecha de inicio de la serie.
     fechafin: datetime
-        Fecha de fin de la serie
+        Fecha de fin de la serie.
 
     Retorno
     ----------
     df: pd.DataFrame
-        Series consultadas
+        Series consultadas.
     
     Documentación
     ----------
@@ -36,7 +36,7 @@ def get_data(series, tipo="Close", fechaini=None, fechafin=None):
 
     @author: Mauricio Alvarado
     
-    """
+    '''
     
     
     keys = list(series.keys())
@@ -46,7 +46,7 @@ def get_data(series, tipo="Close", fechaini=None, fechafin=None):
         data = yf.Ticker(key)
         
         if (fechaini == None) or (fechafin == None):
-            data = data.history(period="max")
+            data = data.history(period='max')
         else:
             data = data.history(start=fechaini, end=fechafin)
         
@@ -60,10 +60,10 @@ def get_data(series, tipo="Close", fechaini=None, fechafin=None):
             pass
     
         # Merge
-        df = pd.concat([df, data[["Date", key]]]) if df.empty is True else pd.merge(df, data[["Date", key]], how="outer")
+        df = pd.concat([df, data[['Date', key]]]) if df.empty is True else pd.merge(df, data[['Date', key]], how='outer')
 
-    df.set_index("Date", inplace=True)
-    df.index = df.index.strftime("%Y-%m-%d")
+    df.set_index('Date', inplace=True)
+    df.index = df.index.strftime('%Y-%m-%d')
     df.sort_index(inplace=True)
     df = df.rename(series, axis = 1)
 
@@ -74,17 +74,17 @@ def get_data(series, tipo="Close", fechaini=None, fechafin=None):
 
 def search(consulta):
     
-    """ Extraer código de la consulta
+    ''' Extraer código de la consulta.
     
     Parámetros
     ----------
     consulta: list
-        Palabras claves de las series
+        Palabras claves de las series.
 
     Retorno
     ----------
     df: pd.DataFrame
-        Metadatos de las series consultadas
+        Metadatos de las series consultadas.
     
     Documentación
     ----------
@@ -126,23 +126,23 @@ def search(consulta):
     
     @author: Mauricio Alvarado
     
-    """
+    '''
     
     df = pd.read_csv(
-        "https://raw.githubusercontent.com/mauricioalvaradoo/econdata/master/src/econdata/metadata/Yahoo-Tickers.csv",
+        'https://raw.githubusercontent.com/mauricioalvaradoo/econdata/master/src/econdata/metadata/Yahoo-Tickers.csv',
         index_col=0
     ).reset_index()
-    df = df[["Symbol", "Name", "Country", "IPO Year", "Sector", "Industry"]]
-    df.set_index("Symbol", inplace=True)
+    df = df[['Symbol', 'Name', 'Country', 'IPO Year', 'Sector', 'Industry']]
+    df.set_index('Symbol', inplace=True)
     
     consulta = [x.lower() for x in consulta]
     
     for i in consulta:           
         try:
-            filter = df["Name"].str.lower().str.contains(i)
+            filter = df['Name'].str.lower().str.contains(i)
             df = df[filter]
         except:
-            df = print("Consulta no encontrada!")
+            df = print('Consulta no encontrada!')
             return
     
     return df
