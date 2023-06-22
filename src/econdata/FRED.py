@@ -72,7 +72,7 @@ def get_data(series, api_key, fechaini, fechafin):
         df = dictio if df.empty is True else pd.merge(df, dictio, how='outer')
 
     df.set_index('time', inplace=True)
-    df.rename (series, axis = 1, inplace = True)
+    df.rename(series, axis = 1, inplace = True)
     df = df.loc[fechaini: fechafin]
     
     # Corrigiendo '.' for missing values   
@@ -85,6 +85,7 @@ def get_data(series, api_key, fechaini, fechafin):
     
     # index to datetime
     df.index = pd.to_datetime(df.index)
+    df.sort_index(inplace=True)
 
     return df
 

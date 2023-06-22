@@ -113,6 +113,8 @@ def get_data(series, fechaini, fechafin):
                         df.index = pd.period_range(newanio+fechaini[4:], fechafin[:4]+'Q4', freq='Q')
                     except:
                         pass
+    
+    df.sort_index(inplace=True) # Ordenamiento de fechas
 
     return df
 
