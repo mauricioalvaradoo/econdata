@@ -37,7 +37,7 @@ def get_data(identifier, countries, serie, fechaini, fechafin, periodicidad):
     '''
 
 
-    filters = "+".join(countries.keys())
+    filters = '+'.join(countries.keys())
     nombres = list(countries.values())
     cantidad_paises = len(countries.keys())
     

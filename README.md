@@ -40,6 +40,11 @@ El código guía para usar las funciones está disponible [aquí](https://github
 El video del anuncio de la librería y la demo está disponible [aquí](https://www.youtube.com/watch?v=etaqHMDfvtE).
 
 
+## Macroeconomic Dataset
+Se elaboró un dataset de series macroeconómicas [aquí](https://github.com/mauricioalvaradoo/econdata/blob/master/macro-dataset.py)
+
+
+
 ## Créditos
 * [Mauricio Alvarado](https://github.com/mauricioalvaradoo)
 * [Andrei Romero](https://github.com/Ixtalia)
