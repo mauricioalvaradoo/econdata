@@ -1,14 +1,15 @@
 ## Testeo
 # !pip install econdata
 from econdata import BCRP
-from econdata import BM
+from econdata import WB
 from econdata import FRED
 from econdata import OECD
 from econdata import YFinance
+from econdata import IMF
 
 
 
-## BCRP ====================================================
+## BCRP =======================================================================
 # search
 consulta = BCRP.search(
     ['Interbancario'],
@@ -36,15 +37,15 @@ doc
 
 
 
-## Banco Mundial ===========================================
+## Banco Mundial ==============================================================
 # search
-consulta = BM.search(
+consulta = WB.search(
     ['life', 'expectancy']
 )
 consulta
 
 # get_data
-df = BM.get_data(
+df = WB.get_data(
     {
         'BR': 'Brasil',
         'CL': 'Chile',
@@ -59,7 +60,7 @@ df.head()
 
 
 
-## FRED ====================================================
+## FRED =======================================================================
 # search
 consulta = FRED.search(
     ['Gross', 'Domestic', 'Product'],
@@ -81,7 +82,7 @@ df.head()
 
 
 
-## OECD ====================================================
+## OECD =======================================================================
 # get_data
 df = OECD.get_data(
     identifier = 'QNA', #Quarterly National Accounts
@@ -98,13 +99,12 @@ df = OECD.get_data(
     fechafin = '2011-Q4',
     periodicidad = 'Q'
 )
-
 df
 
 
 
 
-## Yahoo Finance ===========================================
+## Yahoo Finance ==============================================================
 # search
 consulta = YFinance.search(
     ["Tesla"]
@@ -132,4 +132,37 @@ df = YFinance.get_data(
     }
 )
 df.tail()
+
+
+
+
+## Fondo Monetario Internacional ==============================================
+# search
+consulta = IMF.search('Indicadores', ['GDP'])
+consulta
+
+consulta = IMF.search('Países', ['Chile'])
+consulta
+
+# get_data 1 -> con fecha
+df = IMF.get_data(
+    'NGDP_RPCH',
+    {
+         'PER': 'Perú',
+         'CHL': 'Chile'
+    },
+    fechaini = '2003',
+    fechafin = '2022'
+)
+df
+
+# get_data 2 -> sin fecha
+df = IMF.get_data(
+    'NGDP_RPCH',
+    {
+         'PER': 'Perú',
+         'CHL': 'Chile'
+    }
+)
+df
 

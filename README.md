@@ -1,14 +1,15 @@
 # Econdata
 Extracción de series de tiempo de las principales instituciones económicas para el Perú:
 1. Banco Central de Reserva del Perú (BCRP)
-2. Yahoo Finance
+2. Yahoo Finance (YFinance)
 3. Federal Reserve Economic Data (FRED)
-4. World Bank
-5. Organización para la Cooperación y el Desarrollo Económicos (OCDE)
+4. World Bank (WB)
+5. Organization for Economic Cooperation and Development (OECD)
+6. International Monetary Fund (IMF)
 
 ```
 # Instalación mediante PyPI
-!pip install econdata==1.0.4
+!pip install econdata==1.0.6
 
 # o simplemente:
 !pip install econdata
@@ -16,10 +17,10 @@ Extracción de series de tiempo de las principales instituciones económicas par
 El anuncio fue realizado en Linkedin, y está disponible [aquí](https://www.linkedin.com/posts/mauricioalvaradoo_github-mauricioalvaradooecondata-extracci%C3%B3n-activity-7053798889950179328-wl5w?utm_source=share&utm_medium=member_desktop). 
 
 
-## Versión 1.0.4
-* Para el `BCRP`, `Yahoo Finance`, `FRED` y el `World Bank`, se cuenta con ambos métodos: `get_data()` y `search()`.
-* Para la `OCDE`, se cuenta únicamente con el método `get_data()`.
-* En la versión 1.0.4, (i) se corrigió el formato de las fechas para `BCRP` y `FRED`, y (ii) se añadió el filtro de frecuencia en `search()` para `FRED`.
+## Versión 1.0.6
+* Para el `BCRP`, `YFinance`, `FRED`, `IMF` y el `WB`, se cuenta con ambos métodos: `get_data()` y `search()`.
+* Para la `OECD`, se cuenta únicamente con el método `get_data()`.
+* En la versión 1.0.6, se incluyó el `IMF`.
 
 
 ## Métodos
@@ -41,7 +42,7 @@ El video del anuncio de la librería y la demo está disponible [aquí](https://
 
 
 ## Macroeconomic Dataset
-Se elaboró un dataset de series macroeconómicas [aquí](https://github.com/mauricioalvaradoo/econdata/blob/master/macro-dataset.py)
+Se elaboró un dataset de series macroeconómicas [aquí](https://github.com/mauricioalvaradoo/econdata/blob/master/macro-dataset.py).
 
 
 

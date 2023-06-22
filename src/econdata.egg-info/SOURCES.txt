@@ -1,9 +1,10 @@
 README.md
 setup.py
 src/econdata/BCRP.py
-src/econdata/BM.py
 src/econdata/FRED.py
+src/econdata/IMF.py
 src/econdata/OECD.py
+src/econdata/WB.py
 src/econdata/YFinance.py
 src/econdata/__init__.py
 src/econdata.egg-info/PKG-INFO
