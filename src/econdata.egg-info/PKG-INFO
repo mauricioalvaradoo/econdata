@@ -1,6 +1,6 @@
 Metadata-Version: 2.1
 Name: econdata
-Version: 1.0.5
+Version: 1.0.4
 Summary: Extracción de series de tiempo de las principales instituciones económicas para el Perú
 Home-page: https://github.com/mauricioalvaradoo/econdata
 Author: Mauricio Alvarado, Andrei Romero
@@ -20,7 +20,7 @@ Extracción de series de tiempo de las principales instituciones económicas par
 
 ```
 # Instalación mediante PyPI
-!pip install econdata==1.0.5
+!pip install econdata==1.0.4
 
 # o simplemente:
 !pip install econdata
@@ -28,10 +28,10 @@ Extracción de series de tiempo de las principales instituciones económicas par
 El anuncio fue realizado en Linkedin, y está disponible [aquí](https://www.linkedin.com/posts/mauricioalvaradoo_github-mauricioalvaradooecondata-extracci%C3%B3n-activity-7053798889950179328-wl5w?utm_source=share&utm_medium=member_desktop). 
 
 
-## Versión 1.0.5
+## Versión 1.0.4
 * Para el `BCRP`, `Yahoo Finance`, `FRED` y el `World Bank`, se cuenta con ambos métodos: `get_data()` y `search()`.
 * Para la `OCDE`, se cuenta únicamente con el método `get_data()`.
-* En la versión 1.0.5, se cambió la ruta de los archivos de `search()`
+* En la versión 1.0.4, (i) se corrigió el formato de las fechas para `BCRP` y `FRED`, y (ii) se añadió el filtro de frecuencia en `search()` para `FRED`.
 
 
 ## Métodos
@@ -50,11 +50,6 @@ El resultado incluye los nombres, códigos y fechas que servirán como complemen
 ## Test !
 El código guía para usar las funciones está disponible [aquí](https://github.com/mauricioalvaradoo/econdata/blob/master/test.py).
 El video del anuncio de la librería y la demo está disponible [aquí](https://www.youtube.com/watch?v=etaqHMDfvtE).
-
-
-## Macroeconomic Dataset
-Se elaboró un dataset de series macroeconómicas [aquí](https://github.com/mauricioalvaradoo/econdata/blob/master/macro-dataset.py)
-
 
 
 ## Créditos
