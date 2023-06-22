@@ -129,7 +129,7 @@ def search(consulta):
     '''
     
     df = pd.read_csv(
-        'https://raw.githubusercontent.com/mauricioalvaradoo/econdata/master/src/econdata/metadata/Yahoo-Tickers.csv',
+        'econdata/metadata/Yahoo-Tickers.csv',
         index_col=0
     ).reset_index()
     df = df[['Symbol', 'Name', 'Country', 'IPO Year', 'Sector', 'Industry']]

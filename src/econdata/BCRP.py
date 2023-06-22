@@ -120,7 +120,7 @@ def get_data(series, fechaini, fechafin):
 
 def metadatos():
 
-    metadatos = 'https://raw.githubusercontent.com/mauricioalvaradoo/econdata/master/src/econdata/metadata/BCRPData-metadata.csv'
+    metadatos = 'econdata/metadata/BCRPData-metadata.csv'
     df = pd.read_csv(metadatos, index_col=0, sep=";", encoding="latin-1").reset_index()
     df = df[['Código de serie', 'Grupo de serie', 'Nombre de serie', 'Frecuencia', 'Fecha de inicio', 'Fecha de fin']]
 
