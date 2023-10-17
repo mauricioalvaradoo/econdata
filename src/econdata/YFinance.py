@@ -144,6 +144,11 @@ def search(consulta):
         except:
             df = print('Consulta no encontrada!')
             return
+        
+    try:
+        df['IPO Year'] = df['IPO Year'].astype('Int64')
+    except:
+        pass
     
     return df
 

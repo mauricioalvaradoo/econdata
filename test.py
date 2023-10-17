@@ -9,6 +9,7 @@ from econdata import IMF
 
 
 
+
 ## BCRP =======================================================================
 # search
 consulta = BCRP.search(
@@ -52,10 +53,10 @@ df = WB.get_data(
         'PE': 'Perú'
     },
     indicator = 'SP.DYN.LE60.MA.IN', # Life expectancy at age 60, male
-    fechaini = '1970',
+    fechaini = '1977',
     fechafin = '2022'
 )
-df.head()
+df.dropna()
 
 
 
@@ -64,6 +65,7 @@ df.head()
 # search
 consulta = FRED.search(
     ['Gross', 'Domestic', 'Product'],
+    # https://fred.stlouisfed.org/docs/api/api_key.html
     api_key='#################################'
 )
 consulta
@@ -73,65 +75,12 @@ df = FRED.get_data(
     {
         'GDPC1': 'Real Gross Domestic Product s.a.'
     },
+    # https://fred.stlouisfed.org/docs/api/api_key.html
     api_key='#################################',
     fechaini = '2000-01',
     fechafin = '2022-01'
 )
 df.head()
-
-
-
-
-## OECD =======================================================================
-# get_data
-df = OECD.get_data(
-    identifier = 'QNA', #Quarterly National Accounts
-    countries = 
-    {
-        'AUS': 'Australia',
-        'AUT': 'Austria',
-        'BEL': 'Belgica',
-        'CAN': 'Canada',
-        'CHL': 'Chile'
-    },
-    serie = 'GDP+B1_GE.CUR+VOBARSA.Q', # Gross Domestic Product
-    fechaini = '2004-Q1',
-    fechafin = '2011-Q4',
-    periodicidad = 'Q'
-)
-df
-
-
-
-
-## Yahoo Finance ==============================================================
-# search
-consulta = YFinance.search(
-    ["Tesla"]
-)
-consulta
-
-# get_data 1 -> con fecha
-df = YFinance.get_data(
-    {
-        'AAPL': 'Apple',
-        'MSFT': 'Microsoft',
-        'TSLA': 'Tesla'
-    },
-    fechaini = '2015-01-01',
-    fechafin = '2022-12-31'
-)
-df.tail()
-
-# get_data 2 -> sin fecha
-df = YFinance.get_data(
-    {
-        'AAPL': 'Apple',
-        'MSFT': 'Microsoft',
-        'TSLA': 'Tesla'
-    }
-)
-df.tail()
 
 
 
@@ -165,4 +114,58 @@ df = IMF.get_data(
     }
 )
 df
+
+
+
+
+## OECD =======================================================================
+# get_data
+df = OECD.get_data(
+    identifier = 'QNA', #Quarterly National Accounts
+    countries = 
+    {
+        'AUS': 'Australia',
+        'AUT': 'Austria',
+        'BEL': 'Belgica',
+        'CAN': 'Canada',
+        'CHL': 'Chile'
+    },
+    serie = 'GDP+B1_GE.CUR+VOBARSA.Q', # Gross Domestic Product
+    fechaini = '2004-Q1',
+    fechafin = '2011-Q4',
+    periodicidad = 'Q'
+)
+df
+
+
+
+
+## Yahoo Finance ==============================================================
+# search
+consulta = YFinance.search(
+    ['Tesla']
+)
+consulta
+
+# get_data 1 -> con fecha
+df = YFinance.get_data(
+    {
+        'AAPL': 'Apple',
+        'MSFT': 'Microsoft',
+        'TSLA': 'Tesla'
+    },
+    fechaini = '2015-01-01',
+    fechafin = '2022-12-31'
+)
+df.tail()
+
+# get_data 2 -> sin fecha
+df = YFinance.get_data(
+    {
+        'AAPL': 'Apple',
+        'MSFT': 'Microsoft',
+        'TSLA': 'Tesla'
+    }
+)
+df.tail()
 

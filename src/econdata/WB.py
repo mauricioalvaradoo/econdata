@@ -72,10 +72,10 @@ def get_data(countries, indicator, fechaini, fechafin):
     df = df.loc[fechaini: fechafin]
     
     return df
-      
-          
-      
-      
+
+
+
+
 def search(consulta):
         
     ''' Extraer metadatos.
@@ -108,8 +108,9 @@ def search(consulta):
     
     for i in response: 
         list_id.append(i['id'])
-        list_names.append(i['name'])
+        list_names.append(i['metatype'][0]['value'])
         
-    df= pd.DataFrame({'id': list_id, 'title': list_names})
+    df = pd.DataFrame({'id': list_id, 'title': list_names})
+    df.set_index('id', inplace=True)
 
     return df
