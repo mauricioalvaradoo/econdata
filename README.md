@@ -12,8 +12,8 @@ El anuncio fue realizado en LinkedIn, y está disponible [aquí](https://www.lin
 
 
 ## Instalación
-Para instalar la versión más reciente de econdata desde PyPI:
-```
+Para instalar la versión más reciente de econdata desde [PyPI](https://pypi.org/project/econdata/):
+```python
 pip install econdata
 ```
 
@@ -27,25 +27,22 @@ La librería requiere de las siguientes dependencias:
 
 ## Métodos
 Para cada institución se tiene dos métodos comunes. El primero sirve para extraer las series dado un rango de peridos:
-```
+```text
 get_data()
 ```
 
 La segunda sirve para conseguir la metadata:
-```
+```text
 search()
 ```
 El resultado incluye los nombres, códigos y fechas que servirán como complemento con la función anterior: `get_data()`.
 
 
 ## Getting started
-Se presenta ejemplos de códigos y usos de tres instituciones.
-
-
 ### Ejemplo: Extracción de datos del BCRP
-Iniciaremos con la consulta del __PBI real en variaciones anuales__:
+Iniciaremos con la consulta del _PBI real en variaciones anuales_:
 
-``` python
+```python
 from econdata import BCRP
 
 BCRP.search(
@@ -55,7 +52,7 @@ BCRP.search(
 )
 ```
 
-``` text
+```text
                                                     Grupo de serie  \
 Código de serie                                                      
 PN02507AQ        Producto bruto interno (variaciones porcentuales)   
@@ -69,7 +66,7 @@ PN02526AQ                   PBI  Trimestral         T1-1980      T4-2022
 
 Tras obtener el código de la serie (```PN02526AQ```), se puede solicitar la data para un rango de periodos:
 
-``` python
+```python
 df = BCRP.get_data(
     series={'PN02526AQ':'PBI'},
     fechaini='2000Q1',
@@ -79,7 +76,7 @@ df = BCRP.get_data(
 df
 ```
 
-``` text
+```text
              PBI
 2001Q1 -5.330526
 2001Q2  0.301282
@@ -98,9 +95,9 @@ df
 
 
 ### Ejemplo: Extracción de datos de Banco Mundial
-Iniciaremos con la consulta del __PBI per cápita en PPP constantes (US$ 2017)__ para Perú, Chile y Colombia:
+Iniciaremos con la consulta del _PBI per cápita en PPP constantes (US$ 2017)_ para Perú, Chile y Colombia:
 
-``` python
+```python
 from econdata import WB
 
 WB.search(
@@ -108,7 +105,7 @@ WB.search(
 )
 ```
 
-``` text
+```text
 id                                                                  
 NY.GDP.PCAP.CD                          GDP per capita (current US$)
 NY.GDP.PCAP.CN                          GDP per capita (current LCU)
@@ -126,7 +123,7 @@ SE.XPD.TERT.PC.ZS  Government expenditure per student, tertiary (...
 
 Tras obtener el código de la serie (```NY.GDP.PCAP.PP.KD```), se puede solicitar la data para un rango de periodos:
 
-``` python
+```python
 df = WB.get_data(
     {
         'CO': 'Colombia',
@@ -134,28 +131,16 @@ df = WB.get_data(
         'PE': 'Perú'
     },
     indicator = 'NY.GDP.PCAP.PP.KD',
-    fechaini = '2000',
+    fechaini = '2012',
     fechafin = '2022'
 )
 
 df
 ```
 
-``` text
+```text
           Colombia         Chile          Perú
 time                                          
-2000   9138.318915  15415.754285   6375.616316
-2001   9146.404852  15725.601159   6329.412880
-2002   9232.627395  16053.654609   6596.550192
-2003   9453.328556  16636.653746   6799.449665
-2004   9816.277588  17571.024798   7067.355609
-2005  10150.707922  18415.754990   7443.931118
-2006  10692.727653  19339.487625   7938.434952
-2007  11272.577980  20140.529650   8548.604027
-2008  11507.525825  20695.562561   9262.151136
-2009  11507.717113  20255.098784   9298.078003
-2010  11890.203077  21225.103857   9996.937323
-2011  12578.015627  22323.723085  10539.981964
 2012  12934.965752  23467.978726  11084.873937
 2013  13465.075044  24011.591014  11620.644447
 2014  13938.231517  24197.183280  11773.944135
@@ -171,9 +156,9 @@ time
 
 
 ### Ejemplo: Extracción de datos de Yahoo! Finance
-Iniciaremos con la consulta de la cotización de __Apple__ y __Microsoft__:
+Iniciaremos con la consulta de la cotización de _Apple_ y _Microsoft_:
 
-``` python
+```python
 from econdata import YFinance
 
 YFinance.search(
@@ -181,7 +166,7 @@ YFinance.search(
 )
 ```
 
-``` text
+```text
                                       Name        Country  IPO Year  \
 Symbol                                                                
 MSFT    Microsoft Corporation Common Stock  United States      1986   
@@ -193,7 +178,7 @@ MSFT    Technology  Computer Software: Prepackaged Software
 
 Tras obtener el Ticker de las series (```AAPL``` y ```MSFT```), se puede solicitar la data para un rango de periodos:
 
-``` python
+```python
 df = YFinance.get_data(
     {
         'AAPL': 'Apple',
@@ -206,7 +191,7 @@ df = YFinance.get_data(
 df
 ```
 
-``` text
+```text
                  Apple   Microsoft
 Date                              
 2018-01-02   40.776524   80.391853
@@ -227,7 +212,7 @@ Date
 
 ## Contenido adicional
 Para más información revisar los siguientes links:
-* Para visitar más códigos de __test__ está disponible [aquí](https://github.com/mauricioalvaradoo/econdata/blob/master/test.py).
+* Más códigos de _test_ están disponibles [aquí](https://github.com/mauricioalvaradoo/econdata/blob/master/test.py).
 * El video del anuncio de la librería y la demo está disponible [aquí](https://www.youtube.com/watch?v=etaqHMDfvtE).
 * Revisar un proyecto de la creación de un dashboard de indicadores peruanos elaborado con la librería, disponible [aquí](https://github.com/mauricioalvaradoo/indicators).
 
