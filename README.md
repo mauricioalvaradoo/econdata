@@ -231,5 +231,5 @@ Para más información revisar los siguientes links:
 
 ## Créditos
 * [Mauricio Alvarado](https://github.com/mauricioalvaradoo). email: mauricio.alvarado@pucp.edu.pe
-* [Andrei Romero](https://github.com/Ixtalia).
+* [Andrei Romero](https://github.com/noanroes). email: noandroes@gmail.com
 
