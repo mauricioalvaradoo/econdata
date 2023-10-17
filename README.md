@@ -10,6 +10,16 @@
 
 El anuncio fue realizado en LinkedIn, y está disponible [aquí](https://www.linkedin.com/posts/mauricioalvaradoo_github-mauricioalvaradooecondata-extracci%C3%B3n-activity-7053798889950179328-wl5w?utm_source=share&utm_medium=member_desktop). 
 
+## Tabla de contenido
+- [Instalación](#instalación)
+- [Métodos](#métodos)
+- [Getting started](#getting-started)
+    - [Ejemplo: Extracción de datos del BCRP](#ejemplo-extracción-de-datos-del-bcrp)
+    - [Ejemplo: Extracción de datos de Banco Mundial](#ejemplo-extracción-de-datos-de-banco-mundial)
+    - [Ejemplo: Extracción de datos de Yahoo! Finance](#ejemplo-extracción-de-datos-de-yahoo-finance)
+- [Contenido adicional](#contenido-adicional)
+- [Créditos](#créditos)
+
 
 ## Instalación
 Para instalar la versión más reciente de econdata desde [PyPI](https://pypi.org/project/econdata/):
@@ -106,6 +116,7 @@ WB.search(
 ```
 
 ```text
+                                                               title
 id                                                                  
 NY.GDP.PCAP.CD                          GDP per capita (current US$)
 NY.GDP.PCAP.CN                          GDP per capita (current LCU)
@@ -214,10 +225,11 @@ Date
 Para más información revisar los siguientes links:
 * Más códigos de _test_ están disponibles [aquí](https://github.com/mauricioalvaradoo/econdata/blob/master/test.py).
 * El video del anuncio de la librería y la demo está disponible [aquí](https://www.youtube.com/watch?v=etaqHMDfvtE).
-* Revisar un proyecto de la creación de un dashboard de indicadores peruanos elaborado con la librería, disponible [aquí](https://github.com/mauricioalvaradoo/indicators).
+* Proyecto: creación de modelo de Nowcasting de forecast del PBI real peruano, disponible [aquí](https://github.com/mauricioalvaradoo/nowcasting).
+* Proyecto: creación de un dashboard de indicadores peruanos elaborado con la librería, disponible [aquí](https://github.com/mauricioalvaradoo/indicators).
 
 
 ## Créditos
 * [Mauricio Alvarado](https://github.com/mauricioalvaradoo). email: mauricio.alvarado@pucp.edu.pe
-* [Andrei Romero](https://github.com/Ixtalia)
+* [Andrei Romero](https://github.com/Ixtalia).
 
