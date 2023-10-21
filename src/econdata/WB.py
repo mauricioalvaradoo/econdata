@@ -100,17 +100,27 @@ def search(consulta):
    
     url = f'http://api.worldbank.org/v2/sources/2/search/{formato}?format=json'
     r = requests.get(url) 
-    response = r.json()['source'][0]['concept'][1]['variable']
     
+    
+    try: 
+        response = r.json()['source'][0]['concept'][0]['variable']
+    except:
+        response = r.json()['source'][0]['concept'][1]['variable']
 
+    
     list_id= []
     list_names= []
-    
-    for i in response: 
-        list_id.append(i['id'])
-        list_names.append(i['metatype'][0]['value'])
+        
+    for i in response:
+        try: 
+            list_id.append(i['id'])
+            list_names.append(i['metatype'][0]['value'])
+        except:
+            pass
         
     df = pd.DataFrame({'id': list_id, 'title': list_names})
     df.set_index('id', inplace=True)
+    
+    print('\nTambién se puede consultar en: https://datos.bancomundial.org/indicator/')
 
     return df
