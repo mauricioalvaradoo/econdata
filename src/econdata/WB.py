@@ -1,9 +1,10 @@
 import pandas as pd
-import requests 
+import requests
+import itertools
 
 
 
-def get_data(countries, indicator, fechaini, fechafin):
+def get_data(countries, indicators, fechaini, fechafin):
     
     ''' Importar múltiples series de la API del Banco Mundial.
     
@@ -11,10 +12,11 @@ def get_data(countries, indicator, fechaini, fechafin):
     ----------
     countries: dict
         Diccionario de los códigos y nombres de los países.
-        >>>  countries = {'PE': 'Perú'}   
-    indicator: str
-        Código del indicador o serie.
-        Se obtiene de: 'https://datos.bancomundial.org/indicator/'       
+        >>>  countries = {'PE': 'Perú'}
+    indicators: dict
+        Diccionario de los códigos de los indicadores o series.
+        Se obtienen de: 'https://datos.bancomundial.org/indicator/'
+        >>> indicators = {'NY.GDP.PCAP.PP.KD': 'GDP per capita, PPP (US$ 2017)'}
     fechaini: str
         Fecha de inicio de la serie.
         >>> Anual: yyyy
@@ -37,37 +39,42 @@ def get_data(countries, indicator, fechaini, fechafin):
     '''
 
 
-    keys = list(countries.keys())
     df = pd.DataFrame()
-    
-
-    for i in keys:
-        url = f'http://api.worldbank.org/v2/country/{i}/indicator/{indicator}?format=json'
-         
-        r = requests.get(url) 
-                
-        if r.status_code == 200:
-            pass
-        else:
-            print('Revisa los datos ingresados')
-            break
-    
-        response = r.json()[1]
-    
-        values_list = []
-        time_list = []
-    
-        for j in response: 
-            values_list.append(j['value'])
-            time_list.append(j['date'])
         
-        # Merge
-        dictio = pd.DataFrame({'time': time_list, f'{i}': values_list})
-        df = pd.concat([df, dictio]) if df.empty is True else pd.merge(df, dictio, how = 'outer')
     
-    df.set_index('time', inplace = True)
-    df.sort_index(ascending=True, inplace=True)
-    df.rename(countries, axis=1, inplace=True)
+    for c_k, c_n in countries.items(): 
+        for i_k, i_n in indicators.items():
+                
+            url = f'http://api.worldbank.org/v2/country/{c_k}/indicator/{i_k}?format=json'
+                 
+            r = requests.get(url) 
+                        
+            if r.status_code == 200:
+                pass
+            else:
+                print('Revisa los datos ingresados')
+                break
+            
+            response = r.json()[1]
+            
+            values_list = []
+            time_list   = []
+                
+            for j in response: 
+                values_list.append(j['value'])
+                time_list.append(j['date'])
+                
+            # Formats
+            dictio = pd.DataFrame({'time': time_list, f'{i_k}': values_list})
+            dictio.set_index('time', inplace = True)
+            dictio.sort_index(ascending=True, inplace=True)
+            dictio.rename(indicators, axis=1, inplace=True)
+            
+            # MultiIndex
+            dictio.columns = pd.MultiIndex.from_tuples([(c_n, i_n)])
+            
+            # Merge
+            df = pd.concat([df, dictio], axis=1)
 
     df = df.loc[fechaini: fechafin]
     
@@ -84,6 +91,7 @@ def search(consulta):
     ----------
     consulta: list
         Dos palabras clave de la consulta.
+        También se puede consultar en: https://datos.bancomundial.org/indicator/
         
     Retorno: 
     ---------
@@ -95,32 +103,43 @@ def search(consulta):
     '''
 
 
-    formato = '%20'.join(consulta)
-    formato = formato.lower()
-   
-    url = f'http://api.worldbank.org/v2/sources/2/search/{formato}?format=json'
-    r = requests.get(url) 
+    consulta = [w.lower() for w in consulta]
     
+    # Combinations of words
+    combs = list(itertools.permutations(consulta))
+    combinations = []
+    for co in combs:
+        combination = '%20'.join(co)
+        combinations.append(combination)
     
-    try: 
-        response = r.json()['source'][0]['concept'][0]['variable']
-    except:
-        response = r.json()['source'][0]['concept'][1]['variable']
-
+    # Query
+    list_id    = []
+    list_names = []
     
-    list_id= []
-    list_names= []
+    for f in combinations:
+        try:
+            url = f'http://api.worldbank.org/v2/sources/2/search/{f}?format=json'
+            r = requests.get(url) 
+            response = r.json()['source'][0]['concept']    
         
-    for i in response:
-        try: 
-            list_id.append(i['id'])
-            list_names.append(i['metatype'][0]['value'])
+            for res in response:
+                try:
+                    ii = res['variable']
+                    for i in ii:
+                        list_id.append(i['id'])
+                        list_names.append(i['metatype'][0]['value'])
+                except:
+                    pass
         except:
             pass
-        
+
     df = pd.DataFrame({'id': list_id, 'title': list_names})
     df.set_index('id', inplace=True)
+    df = df.drop_duplicates() # Drop duplicated searchs
+    df = df[~df.index.str.contains('~')]
     
-    print('\nTambién se puede consultar en: https://datos.bancomundial.org/indicator/')
-
-    return df
+    
+    if df.empty is True:
+        print('No encontrado!')
+    else:
+        return df

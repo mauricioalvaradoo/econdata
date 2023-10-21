@@ -1,6 +1,6 @@
 Metadata-Version: 2.1
 Name: econdata
-Version: 1.0.7
+Version: 1.0.8
 Summary: Extracción de series de tiempo de las principales instituciones económicas para el Perú
 Home-page: https://github.com/mauricioalvaradoo/econdata
 Author: Mauricio Alvarado, Andrei Romero
@@ -14,6 +14,7 @@ Requires-Dist: numpy
 Requires-Dist: yfinance
 Requires-Dist: requests
 Requires-Dist: warn
+Requires-Dist: itertools
 
 # Econdata
 **Econdata** es una librería para la extracción de series de tiempo de las principales instituciones económicas para el Perú. En la versión actual se cuenta con las siguientes instituciones:
@@ -26,6 +27,16 @@ Requires-Dist: warn
 
 
 El anuncio fue realizado en LinkedIn, y está disponible [aquí](https://www.linkedin.com/posts/mauricioalvaradoo_github-mauricioalvaradooecondata-extracci%C3%B3n-activity-7053798889950179328-wl5w?utm_source=share&utm_medium=member_desktop). 
+
+## Tabla de contenido
+- [Instalación](#instalación)
+- [Métodos](#métodos)
+- [Getting started](#getting-started)
+    - [Ejemplo: Extracción de datos del BCRP](#ejemplo-extracción-de-datos-del-bcrp)
+    - [Ejemplo: Extracción de datos de Banco Mundial](#ejemplo-extracción-de-datos-de-banco-mundial)
+    - [Ejemplo: Extracción de datos de Yahoo! Finance](#ejemplo-extracción-de-datos-de-yahoo-finance)
+- [Contenido adicional](#contenido-adicional)
+- [Créditos](#créditos)
 
 
 ## Instalación
@@ -40,6 +51,7 @@ La librería requiere de las siguientes dependencias:
 * yfinance
 * requests
 * warn
+* itertools
 
 
 ## Métodos
@@ -123,6 +135,7 @@ WB.search(
 ```
 
 ```text
+                                                               title
 id                                                                  
 NY.GDP.PCAP.CD                          GDP per capita (current US$)
 NY.GDP.PCAP.CN                          GDP per capita (current LCU)
@@ -132,7 +145,6 @@ NY.GDP.PCAP.KN                         GDP per capita (constant LCU)
 NY.GDP.PCAP.PP.CD      GDP per capita, PPP (current international $)
 NY.GDP.PCAP.PP.KD  GDP per capita, PPP (constant 2017 internation...
 PA.NUS.PPP         PPP can be used to convert national accounts d...
-PA.NUS.PRVT.PP     PPP can be used to convert national accounts d...
 SE.XPD.PRIM.PC.ZS  Government expenditure per student, primary (%...
 SE.XPD.SECO.PC.ZS  Government expenditure per student, secondary ...
 SE.XPD.TERT.PC.ZS  Government expenditure per student, tertiary (...
@@ -142,12 +154,14 @@ Tras obtener el código de la serie (```NY.GDP.PCAP.PP.KD```), se puede solicita
 
 ```python
 df = WB.get_data(
-    {
+    countries = {
         'CO': 'Colombia',
         'CL': 'Chile',
         'PE': 'Perú'
     },
-    indicator = 'NY.GDP.PCAP.PP.KD',
+    indicators = {
+        'NY.GDP.PCAP.PP.KD': 'Real GDP per capita'
+    },
     fechaini = '2012',
     fechafin = '2022'
 )
@@ -156,19 +170,20 @@ df
 ```
 
 ```text
-          Colombia         Chile          Perú
-time                                          
-2012  12934.965752  23467.978726  11084.873937
-2013  13465.075044  24011.591014  11620.644447
-2014  13938.231517  24197.183280  11773.944135
-2015  14215.688252  24464.745662  12015.187156
-2016  14358.168218  24599.374633  12321.318154
-2017  14334.914608  24546.912421  12442.746462
-2018  14426.434382  25071.990069  12696.236289
-2019  14616.135124  24809.860974  12735.168278
-2020  13358.298083  22970.550435  11187.343790
-2021  14661.213244  25412.752073  12533.841417
-2022  15651.582058  25886.121356  12743.942391
+                Colombia               Chile                Perú
+     Real GDP per capita Real GDP per capita Real GDP per capita
+time                                                            
+2012        12934.965752        23467.978726        11084.873937
+2013        13465.075044        24011.591014        11620.644447
+2014        13938.231517        24197.183280        11773.944135
+2015        14215.688252        24464.745662        12015.187156
+2016        14358.168218        24599.374633        12321.318154
+2017        14334.914608        24546.912421        12442.746462
+2018        14426.434382        25071.990069        12696.236289
+2019        14616.135124        24809.860974        12735.168278
+2020        13358.298083        22970.550435        11187.343790
+2021        14661.213244        25412.752073        12533.841417
+2022        15651.582058        25886.121356        12743.942391
 ```
 
 
@@ -231,10 +246,11 @@ Date
 Para más información revisar los siguientes links:
 * Más códigos de _test_ están disponibles [aquí](https://github.com/mauricioalvaradoo/econdata/blob/master/test.py).
 * El video del anuncio de la librería y la demo está disponible [aquí](https://www.youtube.com/watch?v=etaqHMDfvtE).
-* Revisar un proyecto de la creación de un dashboard de indicadores peruanos elaborado con la librería, disponible [aquí](https://github.com/mauricioalvaradoo/indicators).
+* Proyecto: creación de modelo de Nowcasting de forecast del PBI real peruano, disponible [aquí](https://github.com/mauricioalvaradoo/nowcasting).
+* Proyecto: creación de un dashboard de indicadores peruanos elaborado con la librería, disponible [aquí](https://github.com/mauricioalvaradoo/indicators).
 
 
 ## Créditos
 * [Mauricio Alvarado](https://github.com/mauricioalvaradoo). email: mauricio.alvarado@pucp.edu.pe
-* [Andrei Romero](https://github.com/Ixtalia)
+* [Andrei Romero](https://github.com/noanroes). email: noandroes@gmail.com
 

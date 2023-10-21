@@ -47,12 +47,14 @@ consulta
 
 # get_data
 df = WB.get_data(
-    {
+    countries = {
         'BR': 'Brasil',
         'CL': 'Chile',
         'PE': 'Perú'
     },
-    indicator = 'SP.DYN.LE60.MA.IN', # Life expectancy at age 60, male
+    indicators = {
+        'SP.DYN.LE60.MA.IN': 'Life expectancy at age 60, male'
+    },
     fechaini = '1977',
     fechafin = '2022'
 )

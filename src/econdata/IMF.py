@@ -41,8 +41,8 @@ def get_data(indicator, countries=None, fechaini=None, fechafin=None):
     # Filtros
     filters = '/'.join(countries.keys()) if countries is not None else None
     dates = [str(y) for y in range(int(fechaini), int(fechafin)+1)] if fechaini is not None and fechafin is not None else None
-    dates = [str(y) for y in range(int(fechaini), 2029)] if fechaini is not None and fechafin is None else dates
-    dates = [str(y) for y in range(1980, int(fechafin)+1)] if fechaini is None and fechafin is not None else dates
+    dates = [str(y) for y in range(int(fechaini), 2029)]            if fechaini is not None and fechafin is     None else dates
+    dates = [str(y) for y in range(1980, int(fechafin)+1)]          if fechaini is     None and fechafin is not None else dates
     dates = ','.join(dates) if dates is not None else None
     
     url = f'{base}{indicator}'
@@ -150,5 +150,3 @@ def search(tipo, consulta=None):
         
     except:
         return print('Revisa bien el tipo!')
-
-

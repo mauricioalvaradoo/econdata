@@ -33,6 +33,7 @@ La librería requiere de las siguientes dependencias:
 * yfinance
 * requests
 * warn
+* itertools
 
 
 ## Métodos
@@ -126,7 +127,6 @@ NY.GDP.PCAP.KN                         GDP per capita (constant LCU)
 NY.GDP.PCAP.PP.CD      GDP per capita, PPP (current international $)
 NY.GDP.PCAP.PP.KD  GDP per capita, PPP (constant 2017 internation...
 PA.NUS.PPP         PPP can be used to convert national accounts d...
-PA.NUS.PRVT.PP     PPP can be used to convert national accounts d...
 SE.XPD.PRIM.PC.ZS  Government expenditure per student, primary (%...
 SE.XPD.SECO.PC.ZS  Government expenditure per student, secondary ...
 SE.XPD.TERT.PC.ZS  Government expenditure per student, tertiary (...
@@ -136,12 +136,14 @@ Tras obtener el código de la serie (```NY.GDP.PCAP.PP.KD```), se puede solicita
 
 ```python
 df = WB.get_data(
-    {
+    countries = {
         'CO': 'Colombia',
         'CL': 'Chile',
         'PE': 'Perú'
     },
-    indicator = 'NY.GDP.PCAP.PP.KD',
+    indicators = {
+        'NY.GDP.PCAP.PP.KD': 'Real GDP per capita'
+    },
     fechaini = '2012',
     fechafin = '2022'
 )
@@ -150,19 +152,20 @@ df
 ```
 
 ```text
-          Colombia         Chile          Perú
-time                                          
-2012  12934.965752  23467.978726  11084.873937
-2013  13465.075044  24011.591014  11620.644447
-2014  13938.231517  24197.183280  11773.944135
-2015  14215.688252  24464.745662  12015.187156
-2016  14358.168218  24599.374633  12321.318154
-2017  14334.914608  24546.912421  12442.746462
-2018  14426.434382  25071.990069  12696.236289
-2019  14616.135124  24809.860974  12735.168278
-2020  13358.298083  22970.550435  11187.343790
-2021  14661.213244  25412.752073  12533.841417
-2022  15651.582058  25886.121356  12743.942391
+                Colombia               Chile                Perú
+     Real GDP per capita Real GDP per capita Real GDP per capita
+time                                                            
+2012        12934.965752        23467.978726        11084.873937
+2013        13465.075044        24011.591014        11620.644447
+2014        13938.231517        24197.183280        11773.944135
+2015        14215.688252        24464.745662        12015.187156
+2016        14358.168218        24599.374633        12321.318154
+2017        14334.914608        24546.912421        12442.746462
+2018        14426.434382        25071.990069        12696.236289
+2019        14616.135124        24809.860974        12735.168278
+2020        13358.298083        22970.550435        11187.343790
+2021        14661.213244        25412.752073        12533.841417
+2022        15651.582058        25886.121356        12743.942391
 ```
 
 
