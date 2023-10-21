@@ -12,9 +12,9 @@ def get_data(series, fechaini, fechafin):
     ----------
     series: dict
         Diccionario de los códigos y nombres de las series.
-    fechaini: datetime
+    fechaini: str
         Fecha de inicio de la serie.
-    fechafin: datetime
+    fechafin: str
         Fecha de fin de la serie.
         
     Retorno
@@ -113,6 +113,9 @@ def get_data(series, fechaini, fechafin):
                         df.index = pd.period_range(newanio+fechaini[4:], fechafin[:4]+'Q4', freq='Q')
                     except:
                         pass
+    if keys[0][-1] == 'A':
+        df.index = pd.to_datetime(df.index, format='%Y').year
+    
     
     df.sort_index(inplace=True) # Ordenamiento de fechas
 
