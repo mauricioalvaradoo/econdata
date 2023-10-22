@@ -32,7 +32,7 @@ La librería requiere de las siguientes dependencias:
 * numpy
 * yfinance
 * requests
-* warn
+* warnings
 * itertools
 
 

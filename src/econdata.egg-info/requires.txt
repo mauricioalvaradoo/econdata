@@ -3,4 +3,4 @@ numpy
 yfinance
 requests
 warn
-itertools
+more-itertools

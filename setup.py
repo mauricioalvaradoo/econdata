@@ -5,7 +5,7 @@ with open('README.md', 'r', encoding='utf-8') as fh:
     
 setuptools.setup(
     name='econdata',
-    version = '1.0.8',
+    version = '1.0.9',
     author = 'Mauricio Alvarado, Andrei Romero',
     description = 'Extracción de series de tiempo de las principales instituciones económicas para el Perú',
     long_description = long_description,
@@ -25,6 +25,6 @@ setuptools.setup(
         'yfinance',
         'requests',
         'warn',
-        'itertools'
+        'more-itertools'
     ]
 )

@@ -1,6 +1,6 @@
 Metadata-Version: 2.1
 Name: econdata
-Version: 1.0.8
+Version: 1.0.9
 Summary: Extracción de series de tiempo de las principales instituciones económicas para el Perú
 Home-page: https://github.com/mauricioalvaradoo/econdata
 Author: Mauricio Alvarado, Andrei Romero
@@ -14,7 +14,7 @@ Requires-Dist: numpy
 Requires-Dist: yfinance
 Requires-Dist: requests
 Requires-Dist: warn
-Requires-Dist: itertools
+Requires-Dist: more-itertools
 
 # Econdata
 **Econdata** es una librería para la extracción de series de tiempo de las principales instituciones económicas para el Perú. En la versión actual se cuenta con las siguientes instituciones:
@@ -50,7 +50,7 @@ La librería requiere de las siguientes dependencias:
 * numpy
 * yfinance
 * requests
-* warn
+* warnings
 * itertools
 
 
