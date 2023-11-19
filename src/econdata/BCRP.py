@@ -3,15 +3,15 @@ import requests
 
 
 
-def get_data(series, fechaini, fechafin):
+def get_data(cod_series: str, fechaini: str, fechafin: str) -> tuple[pd.DataFrame, str]:
 
-    ''' Importar multiples series de la API del BCRP.
-    Considerar que las series deben ser de la misma frecuencia.
+    ''' Importar una serie de la API del BCRP.
+    Considerar la frequencia de las serie para la fecha inicial y final.
     
     Parámetros
     ----------
-    series: dict
-        Diccionario de los códigos y nombres de las series.
+    cod_series: str
+        Código base de la serie.
     fechaini: str
         Fecha de inicio de la serie.
     fechafin: str
@@ -19,8 +19,9 @@ def get_data(series, fechaini, fechafin):
         
     Retorno
     ----------
-    df: pd.DataFrame
-        Series consultadas.
+    Tuple: pd.DataFrame, str
+        pd.DataFrame: Serie consultada.
+        str: Nombre de la serie consultada
     
     Ejemplo
     ----------
@@ -51,53 +52,45 @@ def get_data(series, fechaini, fechafin):
     https://estadisticas.bcrp.gob.pe/estadisticas/series/ayuda/api
     
 
-    @author: Mauricio Alvarado
+    @author: Mauricio Alvarado. @last_editor: Augusto Huerta
     
     '''
-
-    keys = list(series.keys())
-    
-    
-    df = pd.DataFrame()
     base = 'https://estadisticas.bcrp.gob.pe/estadisticas/series/api'
-        
+    url = f'{base}/{cod_series}/json/{fechaini}/{fechafin}/ing'
 
-    for i in keys:
-        url = f'{base}/{i}/json/{fechaini}/{fechafin}/ing'
+    r = requests.get(url)
+    
+    if r.status_code == 200:
+        pass
+    else:
+        print("Vinculacion inválida!", r.status_code)
+        return r.status_code
 
-        r = requests.get(url)
-        
-        if r.status_code == 200:
-            pass
-        else:
-            print('Vinculacion inválida!')
-            break
-        
-        response = r.json().get('periods')
-        
-        list_values = []
-        list_time = []
-                
-        for j in response:
-            list_values.append(float(j['values'][0]))    
-            list_time.append(j['name'])
+    response_dict = r.json() 
+    name_series = response_dict.get('config',{}).get('series', {})[0].get('name')
+    periods = response_dict.get('periods')
 
-        # Merge
-        dic = pd.DataFrame({'time': list_time, f'{i}': list_values})                      
-        df = pd.concat([df, dic]) if df.empty is True else pd.merge(df, dic, how='outer')
-        
-    df.set_index('time', inplace=True)
-    df.rename(series, axis=1, inplace=True)
-
-
+    df = pd.DataFrame(periods)
+    # Extract the float numbers from the "values" column in the df_copy DataFrame
+    df['values'] = df['values'].apply(lambda x: x[0])
+    # Convert the "float_values" column in the df_copy DataFrame to the float data type
+    df['values'] = df['values'].astype(float)
+    # Renaming the column "name" into "date"
+    df.rename({"name":"date"}, axis=1, inplace=True)
+    # Setting the column "name" as an index
+    df.index = df["date"]
+    # Getting rid of that column
+    df.drop("date",axis=1,inplace=True)
+    print("DataFrame procesado. Retornando df y name_series")
+    
     # Formatos de fechas
-    if keys[0][-1] == 'D':
+    if cod_series[-1] == 'D':
         df.index = df.index.str.replace('Set', 'Sep')
         df.index = pd.to_datetime(df.index, format='%d.%b.%y')
-    if keys[0][-1] == 'M':
+    if cod_series[-1] == 'M':
         df.index = df.index.str.replace('Set', 'Sep')
         df.index = pd.to_datetime(df.index, format='%b.%Y')
-    if keys[0][-1] == 'Q':
+    if cod_series[-1] == 'Q':
         try:
             df.index = pd.period_range(fechaini, fechafin, freq='Q')
         except: 
@@ -113,13 +106,13 @@ def get_data(series, fechaini, fechafin):
                         df.index = pd.period_range(newanio+fechaini[4:], fechafin[:4]+'Q4', freq='Q')
                     except:
                         pass
-    if keys[0][-1] == 'A':
+    if cod_series[-1] == 'A':
         df.index = pd.to_datetime(df.index, format='%Y').year
     
     
     df.sort_index(inplace=True) # Ordenamiento de fechas
 
-    return df
+    return df, name_series
 
 
 
@@ -198,7 +191,7 @@ def search(consulta, grupo=None, frecuencia=None):
 
 
 
-def documentation(code):
+def documentation(cod_series):
     
     ''' Extraer microdatos del código de la serie.
     
@@ -222,7 +215,7 @@ def documentation(code):
     '''
 
     df = metadatos()
-    df = df[df['Código de serie'] == str(code)]
+    df = df[df['Código de serie'] == str(cod_series)]
 
     return df
 
