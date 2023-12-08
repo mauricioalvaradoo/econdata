@@ -1,9 +1,9 @@
 import pandas as pd
 import numpy as np
 import requests 
-
 import warnings
 warnings.simplefilter('ignore')
+
 
 
 def get_data(series, api_key, fechaini, fechafin):
@@ -37,9 +37,6 @@ def get_data(series, api_key, fechaini, fechafin):
     ----------
     https://fred.stlouisfed.org/docs/api/fred/
     
-
-    @authors: Norbert Andrei Romero Escobedo, Mauricio Alvarado
-    
     '''
     
     
@@ -51,13 +48,7 @@ def get_data(series, api_key, fechaini, fechafin):
         url = f'https://api.stlouisfed.org/fred/series/observations?series_id={i}&api_key={api_key}&file_type=json'
     
         r = requests.get(url)
-        
-        if r.status_code == 200:
-            pass
-        else:
-            print('Por favor, revisa los datos ingresados.')
-            break
-    
+        raise Exception('Vinculacion inválida!') if r.status_code != 200 else None
         observations = r.json().get('observations')
     
         list_values = []
@@ -113,9 +104,6 @@ def search(consulta, api_key, frecuencia=None):
     ----------
     df: pd.DataFrame
        Series consultadas.
-    
-
-    @authors: Norbert Andrei Romero Escobedo, Mauricio Alvarado
     
     '''
     

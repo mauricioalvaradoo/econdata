@@ -31,26 +31,17 @@ def get_data(identifier, countries, serie, fechaini, fechafin, periodicidad):
     -------
     https://stats.oecd.org/
     
-    
-    @authors: Nobert Andrei Romero Escobedo, Mauricio Alvarado
-    
     '''
 
-
+    base = 'https://stats.oecd.org/SDMX-JSON'
     filters = '+'.join(countries.keys())
     nombres = list(countries.values())
     cantidad_paises = len(countries.keys())
     
-    url = f'https://stats.oecd.org/SDMX-JSON/data/{identifier}/{filters}.{serie}/all?startTime={fechaini}&endTime={fechafin}'
+    url = f'{base}/data/{identifier}/{filters}.{serie}/all?startTime={fechaini}&endTime={fechafin}'
 
     r = requests.get(url)
-    if r.status_code == 200:
-        pass
-    else:
-        print('Por favor, revisa los datos ingresados.')
-        return
-
-
+    raise Exception('Vinculacion inválida!') if r.status_code != 200 else None
     series = r.json()['dataSets'][0]['series']    
     
     df = pd.DataFrame()

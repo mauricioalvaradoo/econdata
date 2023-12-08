@@ -32,9 +32,6 @@ def get_data(series, tipo='Close', fechaini=None, fechafin=None):
     Documentación
     ----------
     https://pypi.org/project/yfinance/
-
-
-    @author: Mauricio Alvarado
     
     '''
     
@@ -89,42 +86,6 @@ def search(consulta):
     Documentación
     ----------
     https://www.nasdaq.com/market-activity/stocks/screener
-    
-        
-    Ejemplos
-    ----------
-    >>> ^GSPC: S&P 500
-    >>> ^DJI: Dow Jones Industrail Average
-    >>> ^IXIC: Nasdaq Composite
-    >>> ^FTSE: FTSE 100
-    >>> ^N225: Nikkei 225
-    >>> ^HSI: HSI
-    >>> ^TNX: Treasury Yield 10 Years
-    >>> DX-Y.NYB: US/USDX Index
-    >>> EURUSD=X: EUR/USD
-        
-    >>> HG=F: Copper Futures
-    >>> SI=F: Silver Futures
-    >>> CL=F: Crude Oil Futures
-    >>> GC=F: Gold Futures
-    >>> PL=F: Platinum Futures
-    >>> NG=F: Natural Gas Futures
-    >>> ZC=F: Corn Futures
-    >>> ZM=F: Soybean Meal Futures
-        
-    >>> AMZN: Amazon Inc.
-    >>> AAPL: Apple Inc.
-    >>> MSFT: Microsoft
-    >>> META: Meta Platforms Inc.
-    >>> NFLX: Netflix Inc.
-    >>> PYPL: Paypal Holdings Inc.
-    >>> SHOP: Shopify
-    >>> SPOT: Spotify
-    >>> TCEHY: Tencent Holdings Limited
-    >>> TSLA: Tesla
-    
-    
-    @author: Mauricio Alvarado
     
     '''
     

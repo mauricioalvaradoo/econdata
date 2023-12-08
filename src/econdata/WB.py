@@ -32,9 +32,6 @@ def get_data(countries, indicators, fechaini, fechafin):
     Documentación
     ----------
     https://datahelpdesk.worldbank.org/knowledgebase/articles/898581-api-basic-call-structure
-    
-    
-    @authors: Mauricio Alvarado, Norbert Andrei Romero Escobedo
 
     '''
 
@@ -48,13 +45,7 @@ def get_data(countries, indicators, fechaini, fechafin):
             url = f'http://api.worldbank.org/v2/country/{c_k}/indicator/{i_k}?format=json'
                  
             r = requests.get(url) 
-                        
-            if r.status_code == 200:
-                pass
-            else:
-                print('Revisa los datos ingresados')
-                break
-            
+            raise Exception('Vinculacion inválida!') if r.status_code != 200 else None            
             response = r.json()[1]
             
             values_list = []
@@ -97,8 +88,6 @@ def search(consulta):
     ---------
     df: pd.DataFrame
        Series consultadas.
-    
-    @authors: Mauricio Alvarado, Norbert Andrei Romero Escobedo  
 
     '''
 

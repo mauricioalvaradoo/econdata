@@ -50,9 +50,6 @@ def get_data(series, fechaini, fechafin):
     ----------
     https://estadisticas.bcrp.gob.pe/estadisticas/series/ayuda/api
     
-
-    @author: Mauricio Alvarado
-    
     '''
 
     keys = list(series.keys())
@@ -66,17 +63,10 @@ def get_data(series, fechaini, fechafin):
         url = f'{base}/{i}/json/{fechaini}/{fechafin}/ing'
 
         r = requests.get(url)
-        
-        if r.status_code == 200:
-            pass
-        else:
-            print('Vinculacion inválida!')
-            break
-        
+        raise Exception('Vinculacion inválida!') if r.status_code != 200 else None        
         response = r.json().get('periods')
         
-        list_values = []
-        list_time = []
+        list_values = []; list_time = []
                 
         for j in response:
             list_values.append(float(j['values'][0]))    
@@ -125,7 +115,8 @@ def get_data(series, fechaini, fechafin):
 
 def metadatos():
 
-    metadatos = 'https://raw.githubusercontent.com/mauricioalvaradoo/econdata/master/src/econdata/metadata/BCRPData-metadata.csv'
+    metadatos = 'https://raw.githubusercontent.com/mauricioalvaradoo/'+\
+                'econdata/master/src/econdata/metadata/BCRPData-metadata.csv'
     df = pd.read_csv(metadatos, index_col=0, sep=";", encoding="latin-1").reset_index()
     df = df[['Código de serie', 'Grupo de serie', 'Nombre de serie', 'Frecuencia', 'Fecha de inicio', 'Fecha de fin']]
 
@@ -158,9 +149,6 @@ def search(consulta, grupo=None, frecuencia=None):
     Documentación
     ----------
     https://estadisticas.bcrp.gob.pe/estadisticas/series/ayuda/metadatos
-    
-    
-    @author: Mauricio Alvarado
     
     '''
     
@@ -215,9 +203,6 @@ def documentation(code):
     Documentación
     ----------
     https://estadisticas.bcrp.gob.pe/estadisticas/series/ayuda/metadatos
-    
-    
-    @author: Mauricio Alvarado
     
     '''
 

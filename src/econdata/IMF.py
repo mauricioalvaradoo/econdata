@@ -30,9 +30,6 @@ def get_data(indicator, countries=None, fechaini=None, fechafin=None):
     Documentación
     ----------
     https://www.imf.org/external/datamapper/api/help
-    
-    
-    @authors: Mauricio Alvarado
 
     '''
     
@@ -85,11 +82,10 @@ def search(tipo, consulta=None):
     ----------
     * https://www.imf.org/en/Data
     * https://www.imf.org/external/datamapper/api/help
-
-
-    @author: Mauricio Alvarado
     
     '''
+    
+    base = 'https://www.imf.org/external/datamapper/api/v1'
     
     def search_df1(r):
         codes = []; names = []; units = []; datasets = []
@@ -124,7 +120,7 @@ def search(tipo, consulta=None):
     
     try:
         selection = types[tipo]
-        url = f'https://www.imf.org/external/datamapper/api/v1/{selection}'
+        url = f'{base}/{selection}'
         r = requests.get(url).json()[selection]
         
         try: 
