@@ -41,7 +41,10 @@ def get_data(identifier, countries, serie, fechaini, fechafin, periodicidad):
     url = f'{base}/data/{identifier}/{filters}.{serie}/all?startTime={fechaini}&endTime={fechafin}'
 
     r = requests.get(url)
-    raise Exception('Vinculacion inválida!') if r.status_code != 200 else None
+    if r.status_code == 200:
+        pass
+    else:
+        print('Vinculacion inválida!')
     series = r.json()['dataSets'][0]['series']    
     
     df = pd.DataFrame()

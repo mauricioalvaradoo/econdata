@@ -45,7 +45,10 @@ def get_data(countries, indicators, fechaini, fechafin):
             url = f'http://api.worldbank.org/v2/country/{c_k}/indicator/{i_k}?format=json'
                  
             r = requests.get(url) 
-            raise Exception('Vinculacion inválida!') if r.status_code != 200 else None            
+            if r.status_code == 200:
+                pass
+            else:
+                print('Vinculacion inválida!')          
             response = r.json()[1]
             
             values_list = []

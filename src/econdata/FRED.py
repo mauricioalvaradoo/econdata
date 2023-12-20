@@ -48,7 +48,10 @@ def get_data(series, api_key, fechaini, fechafin):
         url = f'https://api.stlouisfed.org/fred/series/observations?series_id={i}&api_key={api_key}&file_type=json'
     
         r = requests.get(url)
-        raise Exception('Vinculacion inválida!') if r.status_code != 200 else None
+        if r.status_code == 200:
+            pass
+        else:
+            print('Vinculacion inválida!')
         observations = r.json().get('observations')
     
         list_values = []

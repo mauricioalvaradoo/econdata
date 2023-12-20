@@ -63,22 +63,21 @@ def get_data(series, fechaini, fechafin):
         url = f'{base}/{i}/json/{fechaini}/{fechafin}/ing'
 
         r = requests.get(url)
-        raise Exception('Vinculacion inválida!') if r.status_code != 200 else None        
+        if r.status_code == 200:
+            pass
+        else:
+            print('Vinculacion inválida!')
         response = r.json().get('periods')
         
         list_values = []; list_time = []
                 
         for j in response:
-            values = j['values'][0]
-            try:
-                values = values.replace({'n.d.': None})
-            except:
-                pass
-            list_values.append(float(values))    
+            list_values.append(j['values'][0])    
             list_time.append(j['name'])
 
         # Merge
-        dic = pd.DataFrame({'time': list_time, f'{i}': list_values})                      
+        dic = pd.DataFrame({'time': list_time, f'{i}': list_values})
+        dic[[f'{i}']] = dic[[f'{i}']].replace('n.d.', None).astype('float')
         df = pd.concat([df, dic]) if df.empty is True else pd.merge(df, dic, how='outer')
         
     df.set_index('time', inplace=True)
