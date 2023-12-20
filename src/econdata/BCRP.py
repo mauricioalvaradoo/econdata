@@ -69,7 +69,12 @@ def get_data(series, fechaini, fechafin):
         list_values = []; list_time = []
                 
         for j in response:
-            list_values.append(float(j['values'][0]))    
+            values = j['values'][0]
+            try:
+                values = values.replace({'n.d.': None})
+            except:
+                pass
+            list_values.append(float(values))    
             list_time.append(j['name'])
 
         # Merge
