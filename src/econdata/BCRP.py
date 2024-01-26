@@ -35,10 +35,9 @@ def get_data(series, fechaini, fechafin):
     1. De preferencia, para datos 'trimestrales' definir la importación desde
     Q1 del año de 'fechaini' hasta Q4 del de 'fechafin' para que el 'formato'
     de las fechas se asigne correctamente. No obstante, se está contemplando
-    que la API posiblemente brinde la información hasta el Q4 de la 'fechafin'
-    así que no se generará ningún error.
-    >>> fechaini: 1994Q1 (primer trimestre)
-    >>> fechafin: 2019Q4 (último trimestre)
+    que la API posiblemente brinde la información hasta el Q4 de la 'fechafin'.
+        >>> fechaini: 1994Q1 (primer trimestre)
+        >>> fechafin: 2019Q4 (último trimestre)
 
     2. En algunos de los casos, cuando se busca importar datos de un año, pero
     esa serie está en variaciones anuales, la API puede que importe la serie un
@@ -53,35 +52,24 @@ def get_data(series, fechaini, fechafin):
     '''
 
     keys = list(series.keys())
-    
-    
-    df = pd.DataFrame()
+    keysf = '-'.join(keys)    
+
     base = 'https://estadisticas.bcrp.gob.pe/estadisticas/series/api'
-        
 
-    for i in keys:
-        url = f'{base}/{i}/json/{fechaini}/{fechafin}/ing'
+    url = f'{base}/{keysf}/json/{fechaini}/{fechafin}/ing'
+    r = requests.get(url)
+    response = r.json().get('periods')
 
-        r = requests.get(url)
-        if r.status_code == 200:
-            pass
-        else:
-            print('Vinculacion inválida!')
-        response = r.json().get('periods')
-        
-        list_values = []; list_time = []
-                
-        for j in response:
-            list_values.append(j['values'][0])    
-            list_time.append(j['name'])
+    list_values = []
+    list_time   = []
 
-        # Merge
-        dic = pd.DataFrame({'time': list_time, f'{i}': list_values})
-        dic[[f'{i}']] = dic[[f'{i}']].replace('n.d.', None).astype('float')
-        df = pd.concat([df, dic]) if df.empty is True else pd.merge(df, dic, how='outer')
-        
-    df.set_index('time', inplace=True)
-    df.rename(series, axis=1, inplace=True)
+    for i in response:
+        list_values.append(i['values'])    
+        list_time.append(i['name'])
+
+    df = pd.DataFrame(list_values)
+    df.index  = list_time
+    df.columns = list(series.values()) 
 
 
     # Formatos de fechas
@@ -94,22 +82,21 @@ def get_data(series, fechaini, fechafin):
     if keys[0][-1] == 'Q':
         try:
             df.index = pd.period_range(fechaini, fechafin, freq='Q')
-        except: 
+        except ValueError: 
             try: # Hasta fecha fin Q4
                 df.index = pd.period_range(fechaini, fechafin[:4]+'Q4', freq='Q')
-            except: # Aumentando un año para series en var. %
+            except ValueError: # Aumentando un año para series en var. %
                 try:
                     newanio = str( int(fechaini[:4])+1 )
                     df.index = pd.period_range(newanio+fechaini[4:], fechafin, freq='Q')
-                except:  
+                except ValueError:  
                     try: # Aumentando un año para series en var. % y hasta fechafin Q4 
                         newanio = str( int(fechaini[:4])+1 )
                         df.index = pd.period_range(newanio+fechaini[4:], fechafin[:4]+'Q4', freq='Q')
-                    except:
+                    except ValueError:
                         pass
     if keys[0][-1] == 'A':
         df.index = pd.to_datetime(df.index, format='%Y').year
-    
     
     df.sort_index(inplace=True) # Ordenamiento de fechas
 
