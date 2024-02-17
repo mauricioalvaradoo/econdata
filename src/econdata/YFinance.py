@@ -62,6 +62,7 @@ def get_data(series, tipo='Close', fechaini=None, fechafin=None):
     df.set_index('Date', inplace=True)
     df.index = pd.to_datetime(df.index, format='%Y-%m-%d')
     df.sort_index(inplace=True)
+    df = df.astype('float')
     df = df.rename(series, axis = 1)
 
 

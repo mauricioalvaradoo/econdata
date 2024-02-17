@@ -71,6 +71,7 @@ def get_data(countries, indicators, fechaini, fechafin):
             df = pd.concat([df, dictio], axis=1)
 
     df = df.loc[fechaini: fechafin]
+    df = df.astype('float')
     
     return df
 

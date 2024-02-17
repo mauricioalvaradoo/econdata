@@ -5,8 +5,8 @@ with open('README.md', 'r', encoding='utf-8') as fh:
     
 setuptools.setup(
     name='econdata',
-    version = '1.0.12',
-    author = 'Mauricio Alvarado, Andrei Romero',
+    version = '1.0.13',
+    author = 'Mauricio Alvarado',
     description = 'Extracción de series de tiempo de las principales instituciones económicas para el Perú',
     long_description = long_description,
     long_description_content_type='text/markdown',

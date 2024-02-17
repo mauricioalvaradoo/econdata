@@ -69,5 +69,6 @@ def get_data(identifier, countries, serie, fechaini, fechafin, periodicidad):
     df = df.set_index('fechas')
     df.index = pd.period_range(fechaini, fechafin, freq=periodicidad)
     df.sort_index(inplace=True)
+    df = df.astype('float')
     
     return df

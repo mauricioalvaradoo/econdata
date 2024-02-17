@@ -1,9 +1,9 @@
 Metadata-Version: 2.1
 Name: econdata
-Version: 1.0.12
+Version: 1.0.13
 Summary: Extracción de series de tiempo de las principales instituciones económicas para el Perú
 Home-page: https://github.com/mauricioalvaradoo/econdata
-Author: Mauricio Alvarado, Andrei Romero
+Author: Mauricio Alvarado
 Classifier: Programming Language :: Python :: 3
 Classifier: License :: OSI Approved :: MIT License
 Classifier: Operating System :: OS Independent

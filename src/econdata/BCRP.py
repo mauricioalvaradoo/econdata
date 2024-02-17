@@ -30,20 +30,16 @@ def get_data(series, fechaini, fechafin):
     >>> Trimestral: yyyyQq
     >>> Anual: yyyy
     
-    Consejos
+    Observación
     ----------
-    1. De preferencia, para datos 'trimestrales' definir la importación desde
-    Q1 del año de 'fechaini' hasta Q4 del de 'fechafin' para que el 'formato'
-    de las fechas se asigne correctamente. No obstante, se está contemplando
-    que la API posiblemente brinde la información hasta el Q4 de la 'fechafin'.
-        >>> fechaini: 1994Q1 (primer trimestre)
-        >>> fechafin: 2019Q4 (último trimestre)
+    1. A veces las consultas a series 'trimestrales' extraen entre 1-4
+       trimestres más o menos de los solicitados. Para evitar estos problemas
+       de consulta con el servidor, consultar las 'fechaini' y 'fechafin' de
+       inicio (Q1) al fin (Q4) de un rango temporal. Ejemplos:
+           - 2000Q1-2022Q4
+           - 1980Q1-2019Q4
+           - etc...
 
-    2. En algunos de los casos, cuando se busca importar datos de un año, pero
-    esa serie está en variaciones anuales, la API puede que importe la serie un
-    año después del 'fechaini' definido. Una sencilla solución es definir un año
-    antes del que realmente se desea importar para conseguir la serie con el
-    periodo correcto.
 
     Documentación
     ----------
@@ -68,8 +64,9 @@ def get_data(series, fechaini, fechafin):
         list_time.append(i['name'])
 
     df = pd.DataFrame(list_values)
+    df = df.astype('float')
     df.index  = list_time
-    df.columns = list(series.values()) 
+    df.columns = list(series.values())
 
 
     # Formatos de fechas
@@ -81,20 +78,12 @@ def get_data(series, fechaini, fechafin):
         df.index = pd.to_datetime(df.index, format='%b.%Y')
     if keys[0][-1] == 'Q':
         try:
-            df.index = pd.period_range(fechaini, fechafin, freq='Q')
-        except ValueError: 
-            try: # Hasta fecha fin Q4
-                df.index = pd.period_range(fechaini, fechafin[:4]+'Q4', freq='Q')
-            except ValueError: # Aumentando un año para series en var. %
-                try:
-                    newanio = str( int(fechaini[:4])+1 )
-                    df.index = pd.period_range(newanio+fechaini[4:], fechafin, freq='Q')
-                except ValueError:  
-                    try: # Aumentando un año para series en var. % y hasta fechafin Q4 
-                        newanio = str( int(fechaini[:4])+1 )
-                        df.index = pd.period_range(newanio+fechaini[4:], fechafin[:4]+'Q4', freq='Q')
-                    except ValueError:
-                        pass
+            df.index = df.index.map(lambda x: f"{x.split('.')[1]}{x.split('.')[0]}")
+            new_fechaini = fechaini[0:2] + df.index[0]
+            new_fechafin = fechafin[0:2] + df.index[-1]
+            df.index = pd.period_range(new_fechaini, new_fechafin, freq='Q')
+        except:
+            pass
     if keys[0][-1] == 'A':
         df.index = pd.to_datetime(df.index, format='%Y').year
     
