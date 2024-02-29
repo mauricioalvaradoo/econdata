@@ -64,7 +64,8 @@ def get_data(series, fechaini, fechafin):
         list_time.append(i['name'])
 
     df = pd.DataFrame(list_values)
-    df = df.astype('float')
+    df = df.replace({'n.d.': None}) # Replace null values
+    df = df.astype('float') # Set float format
     df.index  = list_time
     df.columns = list(series.values())
 
