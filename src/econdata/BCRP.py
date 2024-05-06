@@ -47,6 +47,7 @@ def get_data(series, fechaini, fechafin):
     
     '''
 
+
     keys = list(series.keys())
     keysf = '-'.join(keys)    
 
@@ -54,7 +55,14 @@ def get_data(series, fechaini, fechafin):
 
     url = f'{base}/{keysf}/json/{fechaini}/{fechafin}/ing'
     r = requests.get(url)
-    response = r.json().get('periods')
+    
+    try:
+        response = r.json().get('periods')
+    except ValueError:
+        print('Error: Revisar que el formato de las fechas')
+        print(' >>> Diario: yyyy-mm-dd\n >>> Mensual: yyyy-mm')
+        print(' >>> Trimestral: yyyyQq\n >>> Anual: yyyy')
+        return
 
     list_values = []
     list_time   = []
@@ -98,7 +106,7 @@ def metadatos():
 
     metadatos = 'https://raw.githubusercontent.com/mauricioalvaradoo/'+\
                 'econdata/master/src/econdata/metadata/BCRPData-metadata.csv'
-    df = pd.read_csv(metadatos, index_col=0, sep=";", encoding="latin-1").reset_index()
+    df = pd.read_csv(metadatos, index_col=0, sep=';', encoding='latin-1').reset_index()
     df = df[['Código de serie', 'Grupo de serie', 'Nombre de serie', 'Frecuencia', 'Fecha de inicio', 'Fecha de fin']]
 
     return df

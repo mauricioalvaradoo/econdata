@@ -19,10 +19,12 @@ def get_data(series, tipo='Close', fechaini=None, fechafin=None):
         >>> Low
         >>> AdjClose
         >>> Volume
-    fechaini: datetime
+    fechaini: str
         Fecha de inicio de la serie.
-    fechafin: datetime
+        >>> Diario: yyyy-mm-dd
+    fechafin: str
         Fecha de fin de la serie.
+        >>> Diario: yyyy-mm-dd
 
     Retorno
     ----------
@@ -34,8 +36,8 @@ def get_data(series, tipo='Close', fechaini=None, fechafin=None):
     https://pypi.org/project/yfinance/
     
     '''
-    
-    
+
+
     keys = list(series.keys())
     df = pd.DataFrame()
     
@@ -45,8 +47,13 @@ def get_data(series, tipo='Close', fechaini=None, fechafin=None):
         if (fechaini == None) or (fechafin == None):
             data = data.history(period='max')
         else:
-            data = data.history(start=fechaini, end=fechafin)
-        
+            try:
+                data = data.history(start=fechaini, end=fechafin)
+            except ValueError:
+                print('Error: Revisar que el formato de las fechas')
+                print(' >>> Diario: yyyy-mm-dd')
+                return
+                
         data.reset_index(inplace=True)
         data[key] = data[tipo]
 

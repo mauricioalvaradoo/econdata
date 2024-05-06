@@ -18,27 +18,27 @@ def get_data(series, api_key, fechaini, fechafin):
         API Key del desarrollador: https://fred.stlouisfed.org/docs/api/api_key.html
     fechaini: str
         Fecha de inicio de la serie.
-    fechfin: str
-        Fecha de fin de la serie.
+        >>> Diario: yyyy-mm-dd
+        >>> Mensual: yyyy-mm
+        >>> Trimestral: yyyyQq
+        >>> Anual: yyyy
+    fechafin: str
+        >>> Diario: yyyy-mm-dd
+        >>> Mensual: yyyy-mm
+        >>> Trimestral: yyyyQq
+        >>> Anual: yyyy
  
     Retorno 
     ----------
     df: pd.DataFrame
        Series consultadas.
-    
-    Ejemplo
-    ----------
-    Formatos para fechas:
-    >>> Diario: yyyy-mm-dd
-    >>> Mensual: yyyy-mm
-    >>> Anual: yyyy   
         
     Documentación
     ----------
     https://fred.stlouisfed.org/docs/api/fred/
     
     '''
-    
+      
     
     keys = list(series.keys())
 
@@ -67,7 +67,6 @@ def get_data(series, api_key, fechaini, fechafin):
 
     df.set_index('time', inplace=True)
     df.rename(series, axis = 1, inplace = True)
-    df = df.loc[fechaini: fechafin]
     
     # Corrigiendo '.' for missing values   
     for i in df.columns:
@@ -76,10 +75,11 @@ def get_data(series, api_key, fechaini, fechafin):
             df[i] = df[i].astype('float')
         except:
             pass
-    
+
     # index to datetime
     df.index = pd.to_datetime(df.index)
     df.sort_index(inplace=True)
+    df = df[(df.index>fechaini)&(df.index<fechafin)]
 
     return df
 
