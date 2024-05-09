@@ -49,32 +49,37 @@ def get_data(series, fechaini, fechafin):
 
 
     keys = list(series.keys())
-    keysf = '-'.join(keys)    
-
     base = 'https://estadisticas.bcrp.gob.pe/estadisticas/series/api'
-
-    url = f'{base}/{keysf}/json/{fechaini}/{fechafin}/ing'
-    r = requests.get(url)
     
-    try:
-        response = r.json().get('periods')
-    except ValueError:
-        print('Error: Revisar que el formato de las fechas')
-        print(' >>> Diario: yyyy-mm-dd\n >>> Mensual: yyyy-mm')
-        print(' >>> Trimestral: yyyyQq\n >>> Anual: yyyy')
-        return
+    df = pd.DataFrame()
+    
+    for key in keys:
+        url = f'{base}/{key}/json/{fechaini}/{fechafin}/ing'
+        r = requests.get(url)
+        
+        try:
+            response = r.json().get('periods')
+        except ValueError:
+            print('Error: Revisar que el formato de las fechas')
+            print(' >>> Diario: yyyy-mm-dd\n >>> Mensual: yyyy-mm')
+            print(' >>> Trimestral: yyyyQq\n >>> Anual: yyyy')
+            return
 
-    list_values = []
-    list_time   = []
+        list_values = []
+        list_time   = []
+    
+        for i in response:
+            list_values.append(i['values'])    
+            list_time.append(i['name'])
 
-    for i in response:
-        list_values.append(i['values'])    
-        list_time.append(i['name'])
-
-    df = pd.DataFrame(list_values)
-    df = df.replace({'n.d.': None}) # Replace null values
-    df = df.astype('float') # Set float format
-    df.index  = list_time
+        df_aux = pd.DataFrame(list_values)
+        df_aux = df_aux.replace({'n.d.': None}) # Replace null values
+        df_aux = df_aux.astype('float') # Set float format
+        df_aux.index  = list_time
+        
+        df = pd.concat([df, df_aux], axis=1)
+    
+    # Nombres
     df.columns = list(series.values())
 
 
